@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{% block title %}TodoList App{% endblock %}</title>
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body class="{% block body-class %}{% endblock %}">
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="{% url 'task-list' %}">TodoApp</a>
+      <nav class="nav">
+        {% if user.is_authenticated %}
+          <span class="nav-item">Hello, {{ user.username }}</span>
+          <a class="nav-item" href="{% url 'task-create' %}">New Task</a>
+          <!-- <a class="nav-item" href="{% url 'logout' %}">Logout</a> -->
+        {% else %}
+          <a class="nav-item" href="{% url 'login' %}">Login</a>
+          <a class="nav-item" href="{% url 'register' %}">Register</a>
+        {% endif %}
+        <button id="theme-toggle" aria-label="Toggle theme" class="theme-toggle">🌓</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="container site-footer">
+    <small>© {{ now.year }} TodoApp</small>
+  </footer>
+
+  <!-- JS
+  <script src="{% static 'js/scripts.js' %}"></script>
+  {% block extra-js %}{% endblock %} -->
+</body>
+</html>
